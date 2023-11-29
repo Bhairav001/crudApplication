@@ -1,6 +1,9 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
+import Page1 from './otherHomepage/Page1';
 
 const HomePage = () => {
+    const navigate = useNavigate()
     const style1={
         backgroundImage:"linear-gradient(180deg,transparent,rgba(0,0,0,.7));"
     }
@@ -10,6 +13,8 @@ const HomePage = () => {
     
   return (
     <div>
+        <Page1/>
+      
     <div class="max-w-screen-xl mx-auto">
         <header class="flex items-center justify-between py-2 border-b">
           <a href="#" class="px-2 lg:px-0 uppercase font-bold text-purple-800">
@@ -26,13 +31,13 @@ const HomePage = () => {
               <a href="#" class="text-gray-500 font-semibold hover:text-purple-500"> Press </a>
             </li>
             <li class="px-2 md:px-4">
-              <a href="#" class="text-gray-500 font-semibold hover:text-purple-500"> Contact </a>
+              <a href="/contact" class="text-gray-500 font-semibold hover:text-purple-500"> Contact </a>
             </li>
             <li class="px-2 md:px-4 hidden md:block">
-              <a href="#" class="text-gray-500 font-semibold hover:text-purple-500"> Login </a>
+              <a href="/login" class="text-gray-500 font-semibold hover:text-purple-500"> Login </a>
             </li>
             <li class="px-2 md:px-4 hidden md:block">
-              <a href="#" class="text-gray-500 font-semibold hover:text-purple-500"> Register </a>
+              <a href="/signup" class="text-gray-500 font-semibold hover:text-purple-500" onClick={()=>navigate("/signup")}> Register </a>
             </li>
           </ul>
     
