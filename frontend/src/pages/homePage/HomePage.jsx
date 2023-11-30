@@ -13,7 +13,7 @@ const HomePage = () => {
     
   return (
     <div>
-        <Page1/>
+      
       
     <div class="max-w-screen-xl mx-auto">
         <header class="flex items-center justify-between py-2 border-b">
@@ -42,7 +42,7 @@ const HomePage = () => {
           </ul>
     
         </header>
-    
+        <Page1/>
         <main class="mt-10">
         
          
