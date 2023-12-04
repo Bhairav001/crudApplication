@@ -1,6 +1,69 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const [data, setData] = useState({
+    email: "",
+    password: ""
+  })
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const navigate = useNavigate()
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+
+  function handleSubmit(e){
+    e.preventDefault();
+
+    if (data.email === "" || data.password === "") {
+      setAlertMessage("Please enter all details first...!");
+      setShowAlert(true);
+
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
+    } else {
+      setAlertMessage("");
+
+      fetch("http://localhost:8080/users/login", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log("res", res);
+         console.log(res.token)
+          if (res.token.length>0) {
+            localStorage.setItem("token", res.token);
+            setAlertMessage("Login Successfully...!");
+            console.log("data")
+            // alert("login sucess")
+          } else {
+            setAlertMessage("Wrong Credentials");
+          }
+
+          setShowAlert(true);
+        })
+        .catch((err) => {
+          console.log(err.message);
+          setAlertMessage("Wrong Credentials");
+          setShowAlert(true);
+        });
+    }
+  }
+
+
+  function handleAlertClose(){
+    setShowAlert(false)
+  }
   return (
     <div className="font-sans">
       <div className="relative min-h-screen flex flex-col sm:justify-center items-center bg-gray-100">
@@ -11,12 +74,38 @@ const Login = () => {
             <label htmlFor="" className="block mt-3 text-sm text-gray-700 text-center font-semibold">
               Login
             </label>
-            <form method="#" action="#" className="mt-10">
+            {showAlert && (
+        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center">
+          <div className={`bg-${alertMessage.includes('Wrong Credentials') ? 'red' : 'blue'}-500 text-white px-6 py-4 rounded shadow`}>
+            <p>{alertMessage}</p>
+            <button
+              className="mt-2 bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+              onClick={handleAlertClose}
+            >
+              Close
+            </button>
+            {alertMessage === 'Login Successfully...!' && (
+              <button
+                className="mt-2 bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                onClick={() => navigate('/')}
+              >
+                Dashboard
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+
+            <form method="#" action="#" className="mt-10" onSubmit={handleSubmit}>
 
               <div>
                 <input
                   type="email"
                   placeholder="bhairav@gmail.com"
+                  value={data.email}
+                  name='email'
+                  onChange={handleChange}
                   className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
                 />
               </div>
@@ -24,7 +113,10 @@ const Login = () => {
               <div className="mt-7">
                 <input
                   type="password"
+                  value={data.password}
+                  name='password'
                   placeholder="************"
+                  onChange={handleChange}
                   className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
                 />
               </div>
