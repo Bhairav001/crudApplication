@@ -8,6 +8,9 @@ import Footer from './components/footer/Footer'
 import HomePage from './pages/homePage/HomePage'
 import Contactus from './pages/Contactus'
 import Calendar from './pages/Calendar'
+import Products from './product/Products'
+import Product from './pages/project/Project'
+import RequiredAuth from './hoc/RequiredAuth'
 
 function App() {
 
@@ -20,6 +23,13 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/contact' element={<Contactus/>}/>
           <Route path='/calendar' element={<Calendar/>}/>
+          <Route path='/products' element={
+          <RequiredAuth>
+             <Products/>
+          </RequiredAuth>
+
+          }></Route>
+          <Route path='/project' element={<Product/>}/>
      </Routes>
     <Footer/>
     </>

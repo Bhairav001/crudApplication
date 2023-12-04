@@ -28,7 +28,7 @@ const HomePage = () => {
               <a href="#" class="text-gray-500 font-semibold hover:text-purple-500"> About </a>
             </li>
             <li class="px-2 md:px-4">
-              <a href="#" class="text-gray-500 font-semibold hover:text-purple-500"> Press </a>
+              <a href="/products" class="text-gray-500 font-semibold hover:text-purple-500"> Products </a>
             </li>
             <li class="px-2 md:px-4">
               <a href="/contact" class="text-gray-500 font-semibold hover:text-purple-500"> Contact </a>
